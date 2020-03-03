@@ -16,6 +16,14 @@ const routes = [
     //或者这样写
     component: () => import("../views/Login/index.vue")
   }
+  // 测试
+  //{
+  //   path: "/index",
+  //   name: "Index",
+  //   //component: Login
+  //   //或者这样写
+  //   component: () => import("../views/Index/index.vue")
+  // }
 ];
 
 const router = new VueRouter({

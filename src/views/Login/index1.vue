@@ -54,7 +54,7 @@
           ></el-input>
         </el-form-item>
 
-        <el-form-item prop="code" class="item-form">
+        <!-- <el-form-item prop="code" class="item-form">
           <label>验证码</label>
           <el-row :gutter="10">
             <el-col :span="15">
@@ -70,7 +70,7 @@
               >
             </el-col>
           </el-row>
-        </el-form-item>
+        </el-form-item> -->
 
         <el-form-item>
           <!-- click中传的参数需要和element标签中的ref值相同 -->
@@ -78,7 +78,6 @@
             type="danger"
             @click="submitForm('zidingyi')"
             class="margin-top-19 block"
-            :disabled="show1"
             >{{ !show ? "登录" : "注册" }}</el-button
           >
         </el-form-item>
@@ -87,7 +86,6 @@
   </div>
 </template>
 <script>
-import sha1 from "js-sha1";
 import { GetCode, Register, Login } from "@/api/login.js";
 import {
   stripscript,
@@ -97,6 +95,8 @@ import {
 } from "@/utils/validate.js";
 import { ref, reactive, onMounted } from "@vue/composition-api";
 import axios from "axios";
+import { getToken, setToken, removeToken, setUser } from "@/utils/auth.js";
+// import local from "@/utils/local.js";
 export default {
   name: "login",
   //setup内存放data数据，生命周期函数贺自定义函数
@@ -206,13 +206,9 @@ export default {
       //json写法，一种是直接.
       // refs.zidingyi.resetFields();
       //另一种是["名称"]
-      clearFormData();
+      refs["zidingyi"].resetFields();
       //调用清除定时器方法
       clearCountDown();
-    };
-    //重置form表单中用户名等内容
-    const clearFormData = () => {
-      refs["zidingyi"].resetFields();
     };
     // 表单方法（element自带）
     //提交表单！！！！！
@@ -221,18 +217,19 @@ export default {
       //正常写法
       //refs['zidingyi'].validate(valid => {
       //用formName替换掉了
-      refs[formName].validate(valid => {
-        if (valid) {
-          if (type.value === "注册") {
-            register();
-          } else {
-            login();
-          }
-        } else {
-          console.log("error submit!!");
-          return false;
-        }
-      });
+      // refs[formName].validate(valid => {
+      // if (valid) {
+      //   if (type.value === "注册") {
+      //   register();
+      // } else {
+      console.log("123456");
+      login();
+      //   }
+      // } else {
+      //   console.log("error submit!!");
+      //   return false;
+      // }
+      // });
     };
     /**
      * 注册
@@ -240,7 +237,7 @@ export default {
     const register = () => {
       let requestData = {
         username: ruleForm.username,
-        password: sha1(ruleForm.password),
+        password: ruleForm.password,
         code: ruleForm.code,
         module: "register"
       };
@@ -258,19 +255,29 @@ export default {
      * 登录
      */
     const login = () => {
+      console.log("123456");
       let loginData = {
         username: ruleForm.username,
-        password: sha1(ruleForm.password),
-        code: ruleForm.code
+        password: ruleForm.password
       };
+      console.log(loginData);
       Login(loginData)
         .then(response => {
-          root.$message({
-            message: response.data.message,
-            type: "success"
-          });
+          console.log(response.data.data);
+          let token = response.data.data.token;
+          let username = response.data.data.username;
+          //存储token和username
+          // local.set("token", token);
+          // local.set("username", username);
+          setToken(token);
+          setUser(username);
         })
         .catch(error => {});
+    };
+    //重置方法
+    const resetForm = formName => {
+      //解构之后省略context
+      refs[formName].resetFields();
     };
     /**
      * 获取验证码
@@ -346,6 +353,7 @@ export default {
     //挂在完成后
     onMounted(() => {});
     return {
+      resetForm,
       submitForm,
       toggleMenu,
       type,

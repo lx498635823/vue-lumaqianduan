@@ -369,3 +369,13 @@
   }
 
   ul, li { list-style: none; }
+  @for $i from 1 through 100{
+    .padding-top-#{$i} {padding-top:(1px*$i)}
+    .padding-left-#{$i} {padding-top:(1px*$i)}
+    .padding-bottom-#{$i} {padding-top:(1px*$i)}
+    .padding-right-#{$i} {padding-top:(1px*$i)}
+    .margin-top-#{$i} {margin-top:(1px*$i)}
+    .margin-left-#{$i} {margin-top:(1px*$i)}
+    .margin-bottom-#{$i} {margin-top:(1px*$i)}
+    .margin-right-#{$i} {margin-top:(1px*$i)}
+  }

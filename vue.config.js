@@ -1,3 +1,9 @@
+const path = require("path");
+// const defaultSettings = require("./src/settings.js");
+function resolve(dir) {
+  return path.join(__dirname, dir);
+}
+// const name = defaultSettings.title || "vue Element Admin"; // page title
 module.exports = {
   // baseUrl从 Vue CLI 3.3 起已弃用，请使用publicPath
   // 默认情况下，Vue CLI 会假设你的应用是被部署在一个域名的根路径上，例如 https://www.my-app.com/。
@@ -23,6 +29,17 @@ module.exports = {
     // 启用 CSS modules for all css / pre-processor files.
     modules: false
   },
+  configureWebpack: {
+    // provide the app's title in webpack's name field, so that
+    // it can be accessed in index.html to inject the correct title.
+    // name: name,
+    resolve: {
+      alias: {
+        "@": resolve("src"),
+        "@c": resolve("src/components")
+      }
+    }
+  },
   // 放置生成的静态资源 (js、css、img、fonts) 的目录(相对于outputDir目录)。
   // 默认值''
   assetsDir: "assets",
@@ -42,27 +59,30 @@ module.exports = {
 
   // 所有 webpack-dev-server 的选项都支持。
   devServer: {
-    host: "localhost",
-    port: 8080, // 端口号
-    https: false,
-    open: true, //配置自动启动浏览器
-
-    // 配置多个代理
+    open: false, // 编译完成是否打开网页
+    host: "0.0.0.0", // 指定使用地址，默认localhost,0.0.0.0代表可以被外界访问
+    port: 8080, // 访问端口
+    https: false, // 编译失败时刷新页面
+    hot: true, // 开启热加载
+    hotOnly: false,
+    //跨域
     proxy: {
-      "/api": {
-        target: "http://localhost:3000", // 本地模拟数据服务器
+      "/devApi": {
+        //测试
+        target: "http://10.99.202.160:8080/pes-zhb-app",
+        // target: "http://www.web-jshtml.cn/productapi",
         changeOrigin: true,
         pathRewrite: {
-          "^/api": "" // 去掉接口地址中的api字符串
-        }
-      },
-      "/foo": {
-        target: "http://localhost:8080", // 本地模拟数据服务器
-        changeOrigin: true,
-        pathRewrite: {
-          "^/foo": "" // 去掉接口地址中的foo字符串
+          "^/devApi": ""
         }
       }
-    }
+    },
+    // 设置代理
+    overlay: {
+      // 全屏模式下是否显示脚本错误
+      warnings: true,
+      errors: true
+    },
+    before: app => {}
   }
 };
