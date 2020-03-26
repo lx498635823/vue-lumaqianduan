@@ -52,13 +52,13 @@ export function Login(data) {
 /**
  * 测试查询
  */
-export function Select(data, token, username) {
-  return service.request({
-    method: "get",
-    url: "/zlsc/CeShi/findCeShiMessages.action?name=" + data,
-    header: {
-      Authorization: token,
-      "X-Username": username
-    }
-  });
-}
+// export function Select(data, token, username) {
+//   return service.request({
+//     method: "get",
+//     url: "/zlsc/CeShi/findCeShiMessages.action?name=" + data,
+//     header: {
+//       Authorization: token,
+//       "X-Username": username
+//     }
+//   });
+// }

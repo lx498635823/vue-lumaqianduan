@@ -25,15 +25,15 @@ const service = axios.create({
 // 添加请求拦截器
 service.interceptors.request.use(
   function(config) {
-    // 在发送请求之前做些什么
-    let token = getToken();
-    let username = getUser();
-    if (token && username) {
-      // 判断是否存在token，如果存在的话，则每个http header都加上token
-      config.headers.Authorization = token;
-      config.headers["X-Username"] = username;
-      console.log("interceptors config=", config);
-    }
+    // // 在发送请求之前做些什么
+    // let token = getToken();
+    // let username = getUser();
+    // if (token && username) {
+    //   // 判断是否存在token，如果存在的话，则每个http header都加上token
+    //   config.headers.Authorization = token;
+    //   config.headers["X-Username"] = username;
+    //   console.log("interceptors config=", config);
+    // }
     //添加完成后需要return
     return config;
   },

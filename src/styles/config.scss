@@ -1,0 +1,19 @@
+//菜单页（首页）
+//菜单宽度
+$navWidth:250px;
+$navWidthMin:63px;
+$navMenuMin: 64px;
+$layoutHeader: 75px;
+//菜单高度
+$navHeigth:75px;
+//侧边栏选中主颜色
+$mainColor:#f56c6c;
+
+//
+@mixin webkit($type, $value){
+  -webkit-#{$type} : $value;
+  -moz-#{$type} : $value;
+  -o-#{$type} : $value;
+  -ms-#{$type} : $value;
+  #{$type} : $value;
+}

@@ -58,7 +58,7 @@
           <label>验证码</label>
           <el-row :gutter="10">
             <el-col :span="15">
-              <el-input v-model.number="ruleForm.code"></el-input>
+              <el-input v-model="ruleForm.code"></el-input>
             </el-col>
             <el-col :span="9">
               <el-button
@@ -88,7 +88,7 @@
 </template>
 <script>
 import sha1 from "js-sha1";
-import { GetCode, Register, Login } from "@/api/login.js";
+import { GetCode, Register } from "@/api/login.js";
 import {
   stripscript,
   validateEmail,
@@ -263,14 +263,30 @@ export default {
         password: sha1(ruleForm.password),
         code: ruleForm.code
       };
-      Login(loginData)
+      root.$store
+        .dispatch("app/login", loginData)
         .then(response => {
           root.$message({
             message: response.data.message,
             type: "success"
           });
+          root.$router.push({
+            name: "Console"
+          });
+          console.log(response);
         })
         .catch(error => {});
+      // Login(loginData)
+      //   .then(response => {
+      //     root.$message({
+      //       message: response.data.message,
+      //       type: "success"
+      //     });
+      //     root.$router.push({
+      //       name: "Console"
+      //     });
+      //   })
+      //   .catch(error => {});
     };
     /**
      * 获取验证码
