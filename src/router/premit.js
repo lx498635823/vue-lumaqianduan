@@ -20,6 +20,7 @@ router.beforeEach((to, from, next) => {
   } else {
     console.log("不存在");
     if (whiteRouter.indexOf(to.path) !== -1) {
+      //判断页面是否需要登陆状态
       console.log("存在");
       next();
     } else {

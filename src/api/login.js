@@ -44,8 +44,8 @@ export function Login(data) {
     //   "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
     // },
     url: "/login/",
-    data
     // 如果data:data变量名和传输的数据名相同可以省略为data如下
+    data
     // data: qs.stringify(data)
   });
 }

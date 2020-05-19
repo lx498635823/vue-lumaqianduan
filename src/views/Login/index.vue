@@ -242,7 +242,8 @@ export default {
         username: ruleForm.username,
         password: sha1(ruleForm.password),
         code: ruleForm.code,
-        module: "register"
+        module: "register",
+        abc: "123456"
       };
       Register(requestData)
         .then(response => {

@@ -71,12 +71,12 @@ const routes = [
         component: () => import("../views/Info/index.vue")
       },
       {
-        path: "/infoCategroy",
-        name: "InfoCategroy",
+        path: "/infoCategory",
+        name: "InfoCategory",
         meta: {
           name: "信息分类"
         },
-        component: () => import("../views/Info/categroy.vue")
+        component: () => import("../views/Info/category.vue")
       }
     ]
   },

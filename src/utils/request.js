@@ -26,8 +26,8 @@ const service = axios.create({
 service.interceptors.request.use(
   function(config) {
     // // 在发送请求之前做些什么
-    // let token = getToken();
-    // let username = getUser();
+    //后台需要前端这边传相关的信息（在消息头中）
+    //token，username等
     // if (token && username) {
     //   // 判断是否存在token，如果存在的话，则每个http header都加上token
     //   config.headers.Authorization = token;
@@ -35,6 +35,10 @@ service.interceptors.request.use(
     //   console.log("interceptors config=", config);
     // }
     //添加完成后需要return
+    let token = getToken();
+    let username = getUser();
+    config.headers["Tokey"] = token;
+    config.headers["UserName"] = username;
     return config;
   },
   function(error) {
